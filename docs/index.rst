@@ -11,16 +11,24 @@ Documentation
 Contents:
 
 .. toctree::
+   :maxdepth: 1
+
+   Overview <self>
+   Changelog <changelog>
+   Examples <examples>
+   Exercises <exercises/index>
+
+.. toctree::
    :maxdepth: 2
 
-   self
    easter
    parser
    relativedelta
    rrule
    tz
+   tz.win <tzwin>
+   utils
    zoneinfo
-   examples
 
 Indices and tables
 ==================
@@ -28,4 +36,3 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

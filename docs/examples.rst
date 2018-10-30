@@ -138,7 +138,7 @@ Next wednesday, but not today.
     datetime.date(2003, 9, 24)
 
 Following
-[http://www.cl.cam.ac.uk/~mgk25/iso-time.html ISO year week number notation]
+`ISO year week number notation <https://www.cl.cam.ac.uk/~mgk25/iso-time.html>`_
 find the first day of the 15th week of 1997.
 
 .. doctest:: relativedelta
@@ -873,7 +873,7 @@ But when an `rruleset` is needed, it is automatically used.
 
 
 parse examples
------------
+--------------
 The following code will prepare the environment:
 
 .. doctest:: tz
@@ -1118,10 +1118,10 @@ Hours with letters work:
     datetime.datetime(2003, 9, 25, 2, 3, 1)
 
     >>> parse("01h02m03", default=DEFAULT)
-    datetime.datetime(2003, 9, 3, 1, 2)
+    datetime.datetime(2003, 9, 25, 1, 2, 3)
 
     >>> parse("01h02", default=DEFAULT)
-    datetime.datetime(2003, 9, 2, 1, 0)
+    datetime.datetime(2003, 9, 25, 1, 2)
 
     >>> parse("01h02s", default=DEFAULT)
     datetime.datetime(2003, 9, 25, 1, 0, 2)
@@ -1190,6 +1190,19 @@ Other random formats:
     datetime.datetime(1990, 6, 13, 5, 50)
 
 
+Override parserinfo with a custom parserinfo
+
+.. doctest:: tz
+
+   >>> from dateutil.parser import parse, parserinfo
+   >>> class CustomParserInfo(parserinfo):
+   ...     # e.g. edit a property of parserinfo to allow a custom 12 hour format
+   ...     AMPM = [("am", "a", "xm"), ("pm", "p")]
+   >>> parse('2018-06-08 12:06:58 XM', parserinfo=CustomParserInfo())
+   datetime.datetime(2018, 6, 8, 0, 6, 58)
+
+
+
 tzutc examples
 --------------
 
@@ -1254,8 +1267,6 @@ tzstr examples
 Here are examples of the recognized formats:
 
   * `EST5EDT`
-  * `EST5EDT,4,0,6,7200,10,0,26,7200,3600`
-  * `EST5EDT,4,1,0,7200,10,-1,0,7200,3600`
   * `EST5EDT4,M4.1.0/02:00:00,M10-5-0/02:00`
   * `EST5EDT4,95/02:00:00,298/02:00`
   * `EST5EDT4,J96/02:00:00,J299/02:00`
@@ -1274,7 +1285,7 @@ in the year of 2003.
 
 Here is the example mentioned in the
 
-[http://www.python.org/doc/current/lib/module-time.html time module documentation].
+[https://docs.python.org/3/library/time.html time module documentation].
 
 .. testsetup:: tzstr
 
@@ -1313,7 +1324,7 @@ Are these really equivalent?
 
 .. doctest:: tzstr
 
-    >>> tzstr('EST5EDT') == tzstr('EST5EDT,4,1,0,7200,10,-1,0,7200,3600')
+    >>> tzstr('EST5EDT') == tzstr('EST5EDT,M4.1.0,M10.5.0')
     True
 
 
@@ -1328,9 +1339,9 @@ Check the daylight limit.
     'EDT'
     >>> datetime(2003, 10, 26, 0, 59, tzinfo=tz).tzname()
     'EDT'
-    >>> datetime(2003, 10, 26, 1, 00, tzinfo=tz).tzname()
+    >>> datetime(2003, 10, 26, 2, 00, tzinfo=tz).tzname()
     'EST'
-  
+
 
 tzrange examples
 ----------------
@@ -1362,7 +1373,7 @@ DST is 1h in the given example) instead of the DST time. That's how
 the `tzinfo` subtypes should deal with the extra hour that happens
 when going back to the standard time. Check
 
-[http://www.python.org/doc/current/lib/datetime-tzinfo.html tzinfo documentation]
+[https://docs.python.org/3/library/datetime.html#datetime.tzinfo tzinfo documentation]
 
 for more information.
 
@@ -1405,7 +1416,7 @@ Check the daylight limit.
     'EDT'
     >>> datetime(2003, 10, 26, 1, 00, tzinfo=tz).tzname()
     'EST'
-  
+
 
 tzical examples
 ---------------
